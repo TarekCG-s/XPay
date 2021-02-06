@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'rest_framework',
     'questions',
 ]
 
@@ -74,10 +77,20 @@ WSGI_APPLICATION = 'xpay_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DATABSE_NAME', 'testdb'),
+        'USER': os.environ.get('DATABSE_USERNAME', 'postgres'),
+        'PASSWORD': os.environ.get('DATABSE_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('DATABSE_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DATABSE_PORT', '5432'),
     }
 }
 
